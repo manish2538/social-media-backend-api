@@ -31,7 +31,7 @@ router.post('/register', async (req, res) => {
 
         //save user details in database 
         const user = await newUser.save();
-        res.status(200).json(user);
+        res.status(200).json({user:"account created successfully",details:user})    ;
     } catch (err) {
         res.status(500).json(err);
     }
@@ -56,7 +56,8 @@ router.post("/login", async (req, res) => {
             }
             else {
                 //saving user session 
-                req.session.user = {email:req.body.email,isLoggedIn:true};
+                // req.session.user = {email:req.body.email,isLoggedIn:true};
+                req.session.user = user;
               
                 req.session.save();
             
@@ -73,7 +74,7 @@ router.post("/login", async (req, res) => {
 
 router.get('/logout', (req, res) => {
   //destory session will destroy the session making user logging out 
-    req.session.destroy((err) => { //todo->instead of destroy session use isLoggedIn = false 
+    req.session.destroy((err) => {  
         if (err) {
             res.status(500).json(err)
         }

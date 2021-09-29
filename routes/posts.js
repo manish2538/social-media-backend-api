@@ -1,25 +1,34 @@
 const router = require("express").Router();
 const Post = require("../models/Post");
+const User = require("../models/User");
+
+
 
 // 2 Extended Functionality
 
 //2.B.a create a post
 router.post("/",async (req,res)=>{
-    
-    const newPost = new Post(req.body)
-    try{
+    //checking is logged user creating a post or any other user.
+   if(req.session.user._id===req.body.userId){
+   
+   try{
+        const newPost = new Post(req.body)
 
         const savedPost = await newPost.save(); //saving new post in database
         res.status(200).json(savedPost);
     }catch(err){
         res.status(500).json(err);
     }
-
+   }
+   else {
+       res.status(403).json("you can't post from another  account");
+   }
 
 })
 // 2 Extended Functionality
 //2.B.b delete a post
 router.delete('/:id',async (req,res)=>{
+   
    try {
     const post = await Post.findById(req.params.id); //find post by id if exist or not
     
@@ -32,6 +41,7 @@ router.delete('/:id',async (req,res)=>{
 } catch (err) {
     res.status(500).json(err);
 }
+  
 });
 
 //2. Extended Functionality
@@ -39,7 +49,11 @@ router.delete('/:id',async (req,res)=>{
 router.get("/:id",async (req,res) =>{
     
     try{    
+        
         const post = await Post.findById(req.params.id); //find post and then give response
+        if(post===null) {
+           return res.status(400).json("post doesn't exist")
+        }
         res.status(200).json(post);
     } catch (err){
         res.status(500).json(err);
@@ -51,6 +65,8 @@ router.get("/:id",async (req,res) =>{
 
 //3.a like/dislike a post
 router.put("/:id/like",async (req,res)=>{
+     //only logged user can like or dislike a post
+   if(req.session.user._id===req.body.userId){
     try{
         const post = await Post.findById(req.params.id); //finding post which we need to like or dislike
             //making a check, that user already  like the post 
@@ -70,6 +86,10 @@ router.put("/:id/like",async (req,res)=>{
     }catch(err){
         res.status(500).json(err);
     }
+}
+else {
+    res.status(403).json("you can't like post from someone else account")
+}
 
 })
 

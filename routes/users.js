@@ -6,8 +6,10 @@ const User = require("../models/User");
 
 //2.A follow a user
 router.put("/:id/follow",async(req,res)=>{
+
     if(req.body.userId !== req.params.id){  // is user trying to follow himself?
-      
+        if(req.session.user._id===req.body.userId){
+        
         try{
             const user = await User.findById(req.params.id); // finding userId in database
             const currentUser = await User.findById(req.body.userId); // finding currentuser who wants to follow/unfollow
@@ -25,6 +27,9 @@ router.put("/:id/follow",async(req,res)=>{
         }catch(err){
             res.status(500).json(err)
         }
+    }else {
+        res.status(403).json("you can't follow this user from someone else account")
+    }
     }else{
         res.status(403).json("You can't follow yourself");
     }
@@ -34,6 +39,8 @@ router.put("/:id/follow",async(req,res)=>{
 //2.A unfollow a user
 
 router.put("/:id/unfollow",async(req,res)=>{
+    if(req.session.user._id===req.body.userId){
+
     if(req.body.userId !== req.params.id){
       
         try{
@@ -54,6 +61,9 @@ router.put("/:id/unfollow",async(req,res)=>{
     }else{
         res.status(403).json("you can't unfollow yourself");
     }
+}else {
+    res.status(403).json("you can't unfollow from someone else account");
+}
 })
 
 

@@ -53,10 +53,9 @@ app.use("/api/posts",authenticate,postRoute);
 //Get request for Home Page
 app.get('/',(req,res)=>{
     console.log(res.statusCode);
-    res.status(200).json(`
-    welcome to twitter \n
-    Basic Functionality-> Register a new user , Login a user. \n
-    Extended Functionality -> Follow/unfollow a user , create read delete tweet. \n
+    res.status(200).json(`welcome to twitter 
+    Basic Functionality-> Register a new user , Login a user. 
+    Extended Functionality -> Follow/unfollow a user , create read delete tweet. 
     Extra credit -> Like/unlike a tweet.
     
     `);

@@ -4,8 +4,8 @@
 const auth = (req,res,next) =>{
 try{
 
-if(req.session.user && req.session.user.isLoggedIn==true){
-    
+if(req.session.user){
+    // console.log("inmiddleware");
     next();   
 
 }else{

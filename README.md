@@ -1,6 +1,6 @@
 Create an application similar to Twitter. DO NOT BUILD A USER INTERFACE, just a backend exposing a well-formed API. 
 
-## Deployment -[API](615429df27d7348de83c0621)
+## Deployment -[API](https://witter-backend-api.herokuapp.com/)
 
 ### Basic Functionality (required)* 
 

@@ -53,12 +53,18 @@ app.use("/api/posts",authenticate,postRoute);
 //Get request for Home Page
 app.get('/',(req,res)=>{
     console.log(res.statusCode);
-    res.status(200).json(`welcome to twitter 
-    Basic Functionality-> Register a new user , Login a user. 
-    Extended Functionality -> Follow/unfollow a user , create read delete tweet. 
-    Extra credit -> Like/unlike a tweet.
-    
-    `);
+    res.status(200).json({
+        title:"twitter Backend APIs",
+        Register:"https://witter-backend-api.herokuapp.com/api/auth/register",
+        Login:"https://witter-backend-api.herokuapp.com/api/auth/login",
+        Logout:"https://witter-backend-api.herokuapp.com/api/auth/logout",
+        Follow:"https://witter-backend-api.herokuapp.com/api/users/<followUserId>/follow",
+        Unfollow:"https://witter-backend-api.herokuapp.com/api/users/<userId>/unfollow",
+        CreatePost:"https://witter-backend-api.herokuapp.com/api/posts/",
+        DeletePost:"https://witter-backend-api.herokuapp.com/api/posts/<PostId>",
+        GetPost:"https://witter-backend-api.herokuapp.com/api/posts/<PostId>",
+        LikeDislike:"https://witter-backend-api.herokuapp.com/api/posts/<PostId>/like",
+    });
 })
 
 
